@@ -1,9 +1,12 @@
 <?php
 
+use App\FakerProviders\Product;
 use App\Models\User;
+use Faker\Provider\Base;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use App\FakerProviders\ProductProvider;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,9 +24,11 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 
+
+
 Route::get('test', function () {
     $faker = \Faker\Factory::create();
-    \Bezhanov\Faker\ProviderCollectionHelper::addAllProvidersTo($faker);
-    dd($faker->productName());
+    $faker->addProvider(new ProductProvider($faker));
+    dd($faker->productPrice());
     return "wow";
 });

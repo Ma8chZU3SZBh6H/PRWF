@@ -22,6 +22,7 @@ class UserFactory extends Factory
      */
     public function definition()
     {
+        error_log("TEST USER");
         return [
             'name' => $this->faker->name(),
             'email' => $this->faker->unique()->safeEmail(),
