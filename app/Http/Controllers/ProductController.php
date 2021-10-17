@@ -17,23 +17,27 @@ class ProductController extends Controller
 
     /**
      * Display a listing of the resource.
-     *
+     * @param  str  $city
      * @return \Illuminate\Http\Response
      */
     public function index($city)
     {
         try {
-            $weather = WeatherAPI::get($city);
-            for ($i = 0; $i < count($weather); $i++) {
-                $forcast = $weather[$i]["weather_forecast"];
-                $weather[$i]["products"] = Product::select_by_weather($forcast);
+            if (Cache::has($city)) {
+                return response()->json(Cache::get($city));
+            } else {
+                $weather = WeatherAPI::get($city);
+                for ($i = 0; $i < count($weather); $i++) {
+                    $forcast = $weather[$i]["weather_forecast"];
+                    $weather[$i]["products"] = Product::select_by_weather($forcast);
+                }
+                $response = [
+                    "city" => $city,
+                    "recommendations" => $weather
+                ];
+                Cache::add($city, $response, 5 * 60);
+                return response()->json($response);
             }
-            $response = [
-                "city" => $city,
-                "recommendations" => $weather
-            ];
-
-            return response()->json($response);
         } catch (\Throwable $th) {
             if ($th->getCode() == 404) {
                 return ResponseCodes::r404();
