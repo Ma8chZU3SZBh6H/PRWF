@@ -8,6 +8,7 @@ use App\Models\Product;
 use Carbon\Carbon;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Throwable;
 
 class ProductController extends Controller
@@ -37,7 +38,7 @@ class ProductController extends Controller
             if ($th->getCode() == 404) {
                 return ResponseCodes::r404();
             } else {
-                return ResponseCodes::r404();
+                return ResponseCodes::r500();
             }
         }
     }
