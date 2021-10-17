@@ -17,11 +17,14 @@ class ProductController extends Controller
 
     /**
      * Display a listing of the resource.
-     * @param  str  $city
+     * @param  string  $city
      * @return \Illuminate\Http\Response
      */
     public function index($city)
     {
+        if (strlen($city) > 255) {
+            return ResponseCodes::r400();
+        }
         try {
             if (Cache::has($city)) {
                 return response()->json(Cache::get($city));
