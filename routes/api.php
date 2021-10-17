@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use App\FakerProviders\ProductProvider;
+use App\Http\Controllers\ProductController;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,7 +25,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 
-
+//Route::get('products', [ProductController::class, 'index']);
+Route::get('products/recommended/{city}', [ProductController::class, 'index']);
 
 Route::get('test', function () {
     $faker = \Faker\Factory::create();

@@ -2,19 +2,44 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\ResponseCodes;
+use App\Helpers\WeatherAPI;
 use App\Models\Product;
+use Carbon\Carbon;
+use GuzzleHttp\Client;
 use Illuminate\Http\Request;
+use Throwable;
 
 class ProductController extends Controller
 {
+
+
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($city)
     {
-        //
+        try {
+            $weather = WeatherAPI::get($city);
+            for ($i = 0; $i < count($weather); $i++) {
+                $forcast = $weather[$i]["weather_forecast"];
+                $weather[$i]["products"] = Product::select_by_weather($forcast);
+            }
+            $response = [
+                "city" => $city,
+                "recommendations" => $weather
+            ];
+
+            return response()->json($response);
+        } catch (\Throwable $th) {
+            if ($th->getCode() == 404) {
+                return ResponseCodes::r404();
+            } else {
+                return ResponseCodes::r404();
+            }
+        }
     }
 
     /**

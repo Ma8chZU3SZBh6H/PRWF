@@ -7,7 +7,7 @@ use Faker\Provider\Base;
 class ProductProvider extends Base
 {
     protected static $productNames = [
-        'adjective' => ['Small', 'Big', 'Black', 'Blue', 'Red', 'Original', 'Warm', 'Heavy', 'Light'],
+        'adjective' => ['Small', 'Big', 'Black', 'Blue', 'Red', 'Original', 'Warm', 'Heavy', 'Light', 'Normal', 'Suspicious'],
         'material' => ['Plastic', 'Glass', 'Cotton', 'Wool', 'Leather', 'Silk', 'Iron'],
         'product' => ['Gloves', 'Hat', 'Umbrella', 'Coat', 'Shirt', 'Underwear', 'Coat', 'Jacket', 'Skirt']
     ];
