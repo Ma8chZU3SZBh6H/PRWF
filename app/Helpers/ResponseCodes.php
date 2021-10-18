@@ -13,8 +13,18 @@ class ResponseCodes
     {
         return static::response(404, $msg);
     }
+
     static public function r500($msg = "Internal Server Error")
     {
         return static::response(500, $msg);
+    }
+
+    static public function r400($msg = "Bad Request")
+    {
+        return static::response(400, $msg);
+    }
+    static public function r401($msg = "Unauthorized")
+    {
+        return static::response(401, $msg);
     }
 }
