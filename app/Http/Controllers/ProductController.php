@@ -45,6 +45,7 @@ class ProductController extends Controller
             if ($th->getCode() == 404) {
                 return ResponseCodes::r404();
             } else {
+                error_log($th);
                 return ResponseCodes::r500();
             }
         }
