@@ -20,17 +20,5 @@ use App\Http\Controllers\ProductController;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
-
-
-//Route::get('products', [ProductController::class, 'index']);
+Route::get('products/recommended/{forecast}', [ProductController::class, 'show'])->where("forecast", "clear|isolated-clouds|scattered-clouds|overcast|light-rain|moderate-rain|heavy-rain|sleet|light-snow|moderate-snow|heavy-snow|fog|na");
 Route::get('products/recommended/{city}', [ProductController::class, 'index']);
-
-Route::get('test', function () {
-    $faker = \Faker\Factory::create();
-    $faker->addProvider(new ProductProvider($faker));
-    dd($faker->productPrice());
-    return "wow";
-});
